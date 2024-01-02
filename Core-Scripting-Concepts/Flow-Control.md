@@ -1,5 +1,9 @@
 # Flow Control
-Flow - control is one of the most important aspect of shell Scripting without them a script will be nothin just a collection of statements, so in order to add logic and flow to script Flow-Control statements are used. These flow control statements can be Iterative - executio of same block multiple times in respect condition, Conditional - execute block which satisfies the condition, jump - chnage the control and function - executeable units which can accept arguments. 
+Flow - control is one of the most important aspect of shell Scripting without them a script will be nothin just a collection of statements, so in order to add logic and flow to script Flow-Control statements are used. These flow control statements can be:
+- Iterative - execution of same block multiple times in respect condition, 
+- Conditional - execute block which satisfies the condition
+- jump - chnage the control
+- function - executeable units which can accept arguments. 
 
 To move with Flow control statements these flags can be used to perform comparisons 
 ```bash
