@@ -127,6 +127,92 @@ If a user simply declares variable in the session and ends the session the varia
 
 However these can be avoided using .bash_profile file present in the home directory; this file is executed every time a new session is spawned we can define our source command for all the file which contains our global and environment variables.
 
+## User Input 
+To input the values at the run time by the user read command is used along with read positional parameters are used to gather user input in basic scenarios. 
+
+Read user input during the execution using read 
+```bash 
+read -p "DESIRED MESSEGE TO BE PROMPTED BEFORE INPUT" VARIABLE-TO-STORE-INPUT 
+```
+
+Positional parameteres: positional parameters are passed during the invocation of the script. each argument is mapped with a position as they are defined in which can be used within the script.
+
+Sample script with name position present in current working directory 
+```bash
+#!/bin/bash
+# This is a script which prints three arguments passed via command line 
+echo "first position $1"
+echo "second position $2"
+echo "third position $3"
+```
+
+Sample execution from script working directory 
+```bash
+bash position "player69" "player420" "player1945" 
+```
+
+Result 
+```bash
+first player69
+second player420
+third player1945
+```
+
+## Variable Quoting and Expantion 
+
+`Case 1`: seperating variables from the other tokens 
+
+When the variables are used along with multiple tokens the statemets tend to lose their readibility and also may let to anormalities. 
+
+Scenario 
+```bash
+#!/bin/bash
+variable="value"
+echo "$variableIS THE VALUE OF THE VARIABLE "
+```
+Explanation 
+In the above example the script fails as the variable collides with the remaining message to prevent this we use curly braces to seperate the tokens.
+
+Solution 
+```bash
+#!/bin/bash
+variable="value"
+echo "${variable}IS THE VALUE OF THE VARIABLE "
+```
+
+`case 2`: splitting of the variables' content 
+
+The content of the variable gets splitted if they are sperated by tabs or spaces this situation occur during the time of iterative statements. Its great feature but the problem comes when we have to perform action on the combined set of values multiple times.
+
+Scenario 
+```bash
+#!/bin/bash
+variable="value1 value2 value3 "
+for element in ${variable}
+do 
+   echo ${element}
+done
+# prints 
+# value1
+# value2
+# value3
+```
+
+Explanation 
+In the above script the content of the variable gets splitted and the each value is print individually to prevent this kind of behaviour one can enclose the variable within quotes. 
+
+Solution 
+```bash
+#!/bin/bash
+variable="value1 value2 value3 "
+for element in "${variable}"
+do 
+   echo ${element}
+done
+
+# prints value1 value2 value3 
+```
+
 <hr> 
 
 Move to the other parts of the core concepts and keep nuking 
