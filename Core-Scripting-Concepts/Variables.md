@@ -1,116 +1,132 @@
-# Bash Variables
 
-Variables are an essential part of any programming language, allowing you to store data and reference it later. Bash shell scripts are no exception, providing several types of variables that serve different purposes.
+# Variables 
 
-## User Defined Variables
+Variables in shell scripting can hold integers, booleans, text, file paths, functions, bitcoin anything just name it one can perform tones of operations on them to get desired results. Its a scripting language so type of the variable is defined dynamicially in normal cases, however one can define the type during declaration.
 
-These are variables defined by the user in a Bash script.
 
-### Declaring Variables
+## Declaration, Initilization and Use
 
-When declaring a variable in Bash, it is important to follow these naming rules:
+The general declaration of a variable includes a VARIABLE-NAME ASSIGNEMNT-OPERATOR VALUE-IN-QUOTES  with no type defined. However
+one can declare variable in various ways using the ` delcare ` command which includes declaration options like integer, array, read only etc. Delcaration of variables using the ` declare ` command results in better backward compatibility, efficiency and readibility. As a better practice initilize a variable with "" nothing during the time of declarations. Below are the declaration type-examples 
 
-- Variable names can contain letters, numbers, and underscores.
-- The first character must be a letter or underscore.
-- Names are case-sensitive - MYVAR and myvar would be different variables.
-- Avoid using Bash reserved keywords as variable names.
-
-To assign a value to a variable, use the equals sign (=):
+`All in one`
 
 ```bash
-myvar="Hello World" 
-```
+VARIABLE="DESIRED-VALUE"             # syntax
+PLANET="Urnus"                       # example
+echo $PLANET                         # use
+``` 
 
-When declaring variables there should be no spaces between the variable
-
-name and equal sign and between the equal sign and the variable value.
-
-This will throw and error
+`Strings or character`
 
 ```bash
-myvar = "Hello World"
+declare VARIABLE="DESIRED-VALUE"     # syntax
+declare GALAXY="Milkyway Galaxy"     # example
+echo $GALAXY                         # use
 ```
 
-Access the value of a variable by prefixing it with a dollar sign ($):
+`Integers`
 
 ```bash
-echo $myvar 
+declare -i VARIABLE="DESIRED-VALUE"  # syntax 
+declare -i GRAVITY="9"               # example
+echo $GRAVITY                        # use
 ```
 
-This would print "Hello World" to the terminal.
-
-It is crucial to keep in mind that when referencing a variable value, the dollar sign is used, but when referencing the variable to assign a value, the dollar sign is not used.
-
-### Unsetting Variables
-
-To unset a variable, use the unset command:
-
-```
-unset myvar
-```
-
-The variable is deleted and cannot be recovered.
-
-## Bash Built-in Variables
-
-Bash provides special variables that are predefined and used to reference specific values. The table below shows a list of these special variables
-
-| Parameter | Description |
-| --- | --- |
-| \$1…\$9 | Parameters 1 to 9. |
-| $0  | Stores the name of the script file or the current shell name. |
-| $1  | represents the first argument. |
-| ${10} | Positional parameter 10. |
-| $#  | Number of positional parameters |
-| $*  | stores all the arguments. |
-| $$  | Process id of the current shell. |
-| $@  | All arguments, starting from first. |
-| $-  | Current options. |
-| $_  | Last argument of the previous command |
-| $!  | The process ID (PID) of the most recently executed background pipeline (like started with command &) |
-| $?  | Status of the most recently executed foreground-pipeline (exit/return code) |
-
-## Environment Variables
-
-These variables are part of the shell environment and they store data about the current session and working environment (thus the name).
-
-There are two types of environment variables in bash:
-
-- Global variables - Visible from the shell session and any child subshells
-- Local variables - Only visible within the shell that defines them.
-
-### Global Variables
-
-Global variables are useful for apps that spawn child subshells needing parent shell infomation.
-
-The env and printenv commands can be used to print global variables.
-
-Some examples:
-
-- $HOME - Home directory of the user
-- $PATH - List of directories searched for commands
-- $SHELL - Current shell being used
-
-Environment variables are usually defined in upper-case and are useful to customize the environment for users and processes. They can be defined at login or using the export command:
+`booleans`
 
 ```bash
-export MYVAR="value"
+# booleans are just comprised of true or fasle binaries not true or false strings 
+IS_HABITABLE=false                  # example of false 
+IS_BEAUTIFUL=true                   # example of true
+echo $HABITABLE                     # use
 ```
 
-Like user defined variables you can also unset global variables using the unset command:
+`Constants`
 
 ```bash
-unset MYVAR
+declare -r VARIABLE="DESIRED-VALUE"  # syntax  
+declare -r COLOR="BLUE"              # example
+echo $COLOR                          # use
 ```
 
-> Making changes or unsetting the a global variable doesn't affect the parent gloabal variable.
-
-## Looking at Local Variables
-
-Local variables are only visible within the shell that defines them. The Linux system sets default local variables, but you can also define your own. Local variables typically use lowercase letters.
-
-To see local variables, use the set command, which shows local, global, and user-defined variables:
+`Array`
 
 ```bash
-set
+declare -a VARIABLE_NAME=("ZEROth Index" , "ONE", "TWO" )   # syntax
+declare -a PLANETS=("EARTH", "URANUS")                      # example
+
+# Syntax                             #  Operations 
+${ARRAY-NAME[*]}                     # All elements
+${#ARRAY-NAME[@]}                    # size of the array
+${ARRAY-NAME[INDEX]}                 # indexed operation
+
+# Example                            # Task
+echo ${PLANETS[*]}                   # Prints all elements of the array
+echo ${#PLANETS[@]}                  # Prints size of the array
+echo ${PLANETS[0]}                   # Prints elements at 0th index 
 ```
+
+
+## Scope of the variables 
+Variables defined have defined accessibility in respect to the scope they are defined in.
+It is to be noticed that variables can be defined in the session or in the shell script so the scope differs accordingly. Moving on, we have three major scopes including 
+
+`local` <br> 
+
+Variables with local scope are limited to the block they are defined in. For example if a variable is declared as local in the loop it will not be accessiable outside of the loop. Local variables are declared with the help of local.
+
+local variables cannot be defined in the session; they are limited to the logical block of the shell script.
+
+Declare local variables in script 
+```bash
+# Only for shell scripts 
+local VARIABLE="VALUE"              # syntax   
+local CITY="Uthopia"                # example 
+```
+
+`global` <br>
+
+Global variables are accessiable by all the process running in the session but not the child processes. 
+
+Global variables when declared in the shell script will be accessiable throught the shell script it will be accessiable by all the blocks like loops and other how ever they loose their existance outside the shell script.
+
+Global variables when declared in the session will be accessiable throught the session. But not the child processes for example if a shell script using that variable is executed it will read an empty variable.
+
+Declare global variables in scripts and session 
+```bash
+VARIABLE="VALUE"                  # syntax for both in session and script 
+```
+
+Source variables as global variables using the source command from a file/script 
+```bash 
+source PATH-TO-FILE-CONTAINING-VARIABLES   # syantx for session 
+```
+
+`environment` <br>
+Environment variables are the variables that are accessiable throught the current session, child sessions also shell scripts. One can check all of the environment variables with the help of env command. The environment variables are defined with the help of export builtin.
+
+Environment variables will not be accessiable outside the script until they are sourced just like we did in global 
+
+Environment variable declared in the session will be accessiable to the shell scripts child session aka everything. 
+
+Declaring a environment variables 
+```bash
+export VARIABLE="VALUE"        # syntax 
+export PS1="\u @ \w :"         # example 
+```
+
+Sourcing a environment variable script
+```bash
+source PATH-TO-FILE-CONTAINING-VARIABLES  # syntax for the session 
+```
+
+## Presistence of the variables 
+
+If a user simply declares variable in the session and ends the session the variables will lose its existance, similarly variables declared in the scrip/tfile lose their existance outside the script so we have to source the variables in order to use them. Leading to situation where user have to source every time in case of file and command to re declare every time in case of session.
+
+However these can be avoided using .bash_profile file present in the home directory; this file is executed every time a new session is spawned we can define our source command for all the file which contains our global and environment variables.
+
+<hr> 
+
+Move to the other parts of the core concepts and keep nuking 
